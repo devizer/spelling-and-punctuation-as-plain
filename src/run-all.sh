@@ -8,12 +8,14 @@ function run1dump() {
   local lang="$3"
   local output="$lang.txt"
   title "$counter of $total: DUMP Words for $lang"
+  err="";
   python3 hunspell_dump_forms_v12.py \
       --aff "$aff" \
       --dic "$dic" \
       --lang "$lang" \
       --output "$output" \
-      --stream --removed-log "$output.removed_zero_lines.txt"
+      --stream --removed-log "$output.removed_zero_lines.txt" || err="ERROR"
+  if [[ -n "$err" ]]; then echo "$lang" >> ERRORS.txt; fi
 }
 # source ~/hunspell_env/bin/activate
 run1dump en_US.aff en_US.dic en_US en_US.txt
