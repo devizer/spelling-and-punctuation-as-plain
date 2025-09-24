@@ -46,7 +46,13 @@ jobs:
       run: |
         Say "Install depndecies"
         Say "1) Folder: [$PWD]"
+        echo "WORKPLACE: ${{ github.workspace }}"
         ls -la
+        Say ".."
+        pushd ..
+        ls -la
+        popd
+
         cd src
         python3 -m venv ./venv
         source ./venv/bin/activate
