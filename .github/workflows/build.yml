@@ -1,0 +1,52 @@
+name: Build spelling and pubctuation as plain
+
+on:
+  workflow_dispatch:
+  push:
+      branches: [ "master" ]
+  schedule:
+      - cron: "15 4 * * *"
+
+defaults:
+  run:
+    shell: bash
+
+
+jobs:
+
+  Build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 600
+    steps:
+    - name: setup hunspell
+      run: |
+        set -eu; set -o pipefail
+        script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+        Say --Reset-Stopwatch
+        Say "CPU: $(Get-CpuName)"
+        
+        bindir="${{ github.workspace }}/bin"
+
+        sudo apt-get update -y -qq
+        sudo apt-get install hunspell aspell -y | grep "Setup\|Unpack"
+        hunspellList="$(apt-cache search hunspell | awk '{print $1}' | grep -E '^hunspell-' | grep -v 'hunspell-de-at-frami\|hunspell-de-ch-frami\|hunspell-de-de-frami\|hunspell-fr-classical\|hunspell-fr-comprehensive\|hunspell-fr-revised' | sort)"
+        Say "hunspell languages: $hunspellList"
+        sudo apt-get install $hunspellList -y -qq
+        hunspellLangList="$(apt-cache search hunspell | awk '{print $1}' | grep -E '^hunspell-' | sort | grep -v 'hunspell-de-at-frami\|hunspell-de-ch-frami\|hunspell-de-de-frami\|hunspell-fr-classical\|hunspell-fr-comprehensive\|hunspell-fr-revised' | awk '{l=substr($1,10); print l}')"
+        Say "Hunspell setup: Done"
+
+    - name: setup python
+      run: |
+        set -eu; set -o pipefail
+        sudo apt-get install python3 -y -qq
+
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: 'Binaries'
+        path: ${{ github.workspace }}
+        # path: "${{ runner.temp }}/Artifacts/**/**"
+          
+  
