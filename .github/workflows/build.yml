@@ -3,7 +3,7 @@ name: Build spelling and pubctuation as plain
 on:
   workflow_dispatch:
   push:
-      branches: [ "master" ]
+      branches: [ "main" ]
   schedule:
       - cron: "15 4 * * *"
 
@@ -30,10 +30,12 @@ jobs:
         sudo apt-get update -y -qq
         sudo apt-get install hunspell aspell -y | grep "Setup\|Unpack"
         hunspellList="$(apt-cache search hunspell | awk '{print $1}' | grep -E '^hunspell-' | grep -v 'hunspell-de-at-frami\|hunspell-de-ch-frami\|hunspell-de-de-frami\|hunspell-fr-classical\|hunspell-fr-comprehensive\|hunspell-fr-revised' | sort)"
-        Say "hunspell languages: $hunspellList"
+        Say "hunspell languages:"; echo $hunspellList
+        Say "Installing hunspell languages"
         sudo apt-get install $hunspellList -y -qq
         hunspellLangList="$(apt-cache search hunspell | awk '{print $1}' | grep -E '^hunspell-' | sort | grep -v 'hunspell-de-at-frami\|hunspell-de-ch-frami\|hunspell-de-de-frami\|hunspell-fr-classical\|hunspell-fr-comprehensive\|hunspell-fr-revised' | awk '{l=substr($1,10); print l}')"
         Say "Hunspell setup: Done"
+        ls -la /usr/share/hunspell/
 
     - name: setup python
       run: |
