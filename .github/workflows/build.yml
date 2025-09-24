@@ -45,10 +45,12 @@ jobs:
     - name: BUILD
       run: |
         Say "Install depndecies"
-        cd "src"
+        Say "1) Folder: [$PWD]"
+        ls -la
+        cd src
         python3 -m venv ./venv
         source ./venv/bin/activate
-        Say "Folder: [$PWD]"
+        Say "2) Folder: [$PWD]"
         pip install --upgrade pip
         pip install pyphen
         Say "Let's rock"
