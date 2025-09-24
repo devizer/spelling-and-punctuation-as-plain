@@ -45,10 +45,10 @@ jobs:
     - name: BUILD
       run: |
         Say "Install depndecies"
-        python3 -m venv ~/spell.venv
-        source ~/spell.venv/bin/activate
+        cd "src"
+        python3 -m venv ./venv
+        source ./venv/bin/activate
         Say "Folder: [$PWD]"
-        cd "${{ github.workspace }}/src"
         pip install --upgrade pip
         pip install pyphen
         Say "Let's rock"
