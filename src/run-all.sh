@@ -1,4 +1,4 @@
-function title() { echo -n -e "\033]0;$1\007"; echo $1; }
+function title() { echo -n -e "\033]0;$1\007"; echo ""; echo ""; Say "$1"; }
 counter=0;
 total=69
 function run1dump() {

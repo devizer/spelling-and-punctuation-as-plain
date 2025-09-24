@@ -48,24 +48,15 @@ jobs:
     - name: BUILD
       run: |
         Say "Install depndecies"
-        Say "1) Folder: [$PWD]"
-        echo "WORKPLACE: ${{ github.workspace }}"
-        ls -la
-        Say ".."
-        pushd ..
-        ls -la
-        popd
-
         cd src
         python3 -m venv ./venv
         source ./venv/bin/activate
-        Say "2) Folder: [$PWD]"
+        Say "Folder: [$PWD]"
         pip install --upgrade pip
         pip install pyphen
         Say "Let's rock"
         source run-all.sh
         Say "Done for all the languages"
-
 
 
     - name: Upload artifacts
