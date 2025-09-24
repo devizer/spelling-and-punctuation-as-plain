@@ -44,6 +44,9 @@ jobs:
       run: |
         set -eu; set -o pipefail
         sudo apt-get install python3 -y -qq
+        "Free memory"
+        free -m
+
 
     - name: BUILD
       run: |
