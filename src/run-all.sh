@@ -150,7 +150,6 @@ run1dump sw_TZ.aff sw_TZ.dic sw_TZ
 run1dump te_IN.aff te_IN.dic te_IN
 run1dump th_TH.aff th_TH.dic th_TH
 run1dump tr_TR.aff tr_TR.dic tr_TR
-run1dump uk_UA.aff uk_UA.dic uk_UA
 run1dump uz_UZ.aff uz_UZ.dic uz_UZ
 run1dump vi_VN.aff vi_VN.dic vi_VN
 run1dump zu_ZA.aff zu_ZA.dic zu_ZA
